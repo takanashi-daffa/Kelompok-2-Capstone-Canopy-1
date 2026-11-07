@@ -53,9 +53,7 @@ public class AdminFrame extends javax.swing.JFrame {
         lblNamaPegawai.setLabelFor(txtNamaPegawai);
         lblUsernamePgw.setLabelFor(txtUsernamePgw);
         lblPasswordPgw.setLabelFor(txtPasswordPgw);
-        lblNoTelp.setLabelFor(txtNoTelp);
         lblRole.setLabelFor(cmbRole);
-        lblDetailRole.setLabelFor(txtDetailRole);
         lblBlok.setLabelFor(cmbBlokLahan);
         lblInput1.setLabelFor(txtInput1);
         lblInput2.setLabelFor(txtInput2);
@@ -92,6 +90,11 @@ public class AdminFrame extends javax.swing.JFrame {
     private void initCustomData() {
         cmbKomoditasBlok.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{"Sawit", "Karet"}));
         cmbRole.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{"Petugas", "Admin", "Direksi"}));
+        tblBlokLahan.setModel(new javax.swing.table.DefaultTableModel(new Object[][]{}, new String[]{"Kode Blok", "Nama Lahan", "Luas (Ha)", "Komoditas"}));
+        tblPegawai.setModel(new javax.swing.table.DefaultTableModel(new Object[][]{}, new String[]{"ID Pegawai", "Nama", "Username", "No. Telepon", "Role"}));
+        
+        tblPegawai.setModel(new javax.swing.table.DefaultTableModel(new Object[][]{}, new String[]{"ID Pegawai", "Nama", "Username", "No. Telepon", "Role"}));
+        
         cmbFilterKomoditas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{"Semua", "Sawit", "Karet"}));
         lblFilterBlok.setText("Filter Mutu Panen:");
         cmbFilterBlok.setModel(new javax.swing.DefaultComboBoxModel<>(new String[]{"Semua Mutu", "Baik", "Cukup", "Kurang"}));
@@ -232,9 +235,7 @@ public class AdminFrame extends javax.swing.JFrame {
         txtUsernamePgw.setText("");
         txtPasswordPgw.setText("");
         txtNoTelp.setText("");
-        if (txtDetailRole != null) txtDetailRole.setText("");
         cmbRole.setSelectedIndex(0);
-        updateRoleDetailLabel();
         tblPegawai.clearSelection();
     }
 
@@ -253,15 +254,7 @@ public class AdminFrame extends javax.swing.JFrame {
     }
 
     private void updateRoleDetailLabel() {
-        if (lblDetailRole == null || cmbRole == null) return;
-        String role = cmbRole.getSelectedItem() == null ? "Petugas" : cmbRole.getSelectedItem().toString();
-        if ("Admin".equalsIgnoreCase(role)) {
-            lblDetailRole.setText("Bagian Administrasi:");
-        } else if ("Direksi".equalsIgnoreCase(role)) {
-            lblDetailRole.setText("Jabatan Direksi:");
-        } else {
-            lblDetailRole.setText("Wilayah Penugasan:");
-        }
+        
     }
 
     private static double parseUserDecimal(String str) {
@@ -447,17 +440,15 @@ public class AdminFrame extends javax.swing.JFrame {
         txtUsernamePgw = new javax.swing.JTextField();
         lblPasswordPgw = new javax.swing.JLabel();
         txtPasswordPgw = new javax.swing.JPasswordField();
-        lblNoTelp = new javax.swing.JLabel();
-        txtNoTelp = new javax.swing.JTextField();
         lblRole = new javax.swing.JLabel();
         cmbRole = new javax.swing.JComboBox<>();
-        lblDetailRole = new javax.swing.JLabel();
-        txtDetailRole = new javax.swing.JTextField();
         btnSimpanPgw = new javax.swing.JButton();
         btnPerbaruiPgw = new javax.swing.JButton();
         btnHapusPgw = new javax.swing.JButton();
         btnResetPgw = new javax.swing.JButton();
         chkShowPasswordPgw = new javax.swing.JCheckBox();
+        lblNoTelp = new javax.swing.JLabel();
+        txtNoTelp = new javax.swing.JTextField();
         pnlTabelPegawai = new javax.swing.JPanel();
         lblDaftarPegawai = new javax.swing.JLabel();
         scrollPegawai = new javax.swing.JScrollPane();
@@ -476,14 +467,14 @@ public class AdminFrame extends javax.swing.JFrame {
         txtInput2 = new javax.swing.JTextField();
         lblTidakLayak = new javax.swing.JLabel();
         txtTidakLayak = new javax.swing.JTextField();
-        lblTahunTanamPanen = new javax.swing.JLabel();
-        txtTahunTanamPanen = new javax.swing.JTextField();
         lblTanggal = new javax.swing.JLabel();
         txtTanggalPanen = new DateTextField();
         btnSimpan = new javax.swing.JButton();
         btnPerbarui = new javax.swing.JButton();
         btnHapus = new javax.swing.JButton();
         btnReset = new javax.swing.JButton();
+        txtTahunTanamPanen = new DateTextField();
+        lblTahunTanamPanen = new javax.swing.JLabel();
         pnlTabelPanen = new javax.swing.JPanel();
         lblDaftarPanen = new javax.swing.JLabel();
         scrollPanen = new javax.swing.JScrollPane();
@@ -721,22 +712,6 @@ public class AdminFrame extends javax.swing.JFrame {
         lblDaftarBlok.setText("Daftar Blok Lahan Perkebunan:");
 
         tblBlokLahan.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
-        tblBlokLahan.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Kode Blok", "Nama Blok / Lahan", "Luas Lahan (Ha)", "Komoditas"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
         tblBlokLahan.setRowHeight(26);
         scrollBlok.setViewportView(tblBlokLahan);
 
@@ -799,11 +774,6 @@ public class AdminFrame extends javax.swing.JFrame {
 
         txtPasswordPgw.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
 
-        lblNoTelp.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        lblNoTelp.setText("No Telepon / WhatsApp:");
-
-        txtNoTelp.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
-
         lblRole.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblRole.setText("Hak Akses / Role:");
 
@@ -813,11 +783,6 @@ public class AdminFrame extends javax.swing.JFrame {
                 cmbRoleActionPerformed(evt);
             }
         });
-
-        lblDetailRole.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        lblDetailRole.setText("Wilayah Penugasan:");
-
-        txtDetailRole.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
 
         btnSimpanPgw.setBackground(new java.awt.Color(21, 94, 239));
         btnSimpanPgw.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -867,6 +832,11 @@ public class AdminFrame extends javax.swing.JFrame {
             }
         });
 
+        lblNoTelp.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lblNoTelp.setText("No Telepon / WhatsApp:");
+
+        txtNoTelp.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
+
         javax.swing.GroupLayout pnlFormPegawaiLayout = new javax.swing.GroupLayout(pnlFormPegawai);
         pnlFormPegawai.setLayout(pnlFormPegawaiLayout);
         pnlFormPegawaiLayout.setHorizontalGroup(
@@ -877,8 +847,6 @@ public class AdminFrame extends javax.swing.JFrame {
                     .addComponent(txtNamaPegawai)
                     .addComponent(txtUsernamePgw)
                     .addComponent(txtPasswordPgw)
-                    .addComponent(txtNoTelp)
-                    .addComponent(cmbRole, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(pnlFormPegawaiLayout.createSequentialGroup()
                         .addComponent(btnSimpanPgw, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -887,6 +855,8 @@ public class AdminFrame extends javax.swing.JFrame {
                         .addComponent(btnHapusPgw, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnResetPgw, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE))
+                    .addComponent(txtNoTelp)
+                    .addComponent(cmbRole, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(pnlFormPegawaiLayout.createSequentialGroup()
                         .addGroup(pnlFormPegawaiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(chkShowPasswordPgw)
@@ -915,21 +885,21 @@ public class AdminFrame extends javax.swing.JFrame {
                 .addComponent(txtPasswordPgw, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(chkShowPasswordPgw)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addComponent(lblNoTelp)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtNoTelp, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addComponent(lblRole)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(cmbRole, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(24, 24, 24)
+                .addGap(18, 18, 18)
                 .addGroup(pnlFormPegawaiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSimpanPgw, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnPerbaruiPgw, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnHapusPgw, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnResetPgw, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(155, Short.MAX_VALUE))
+                .addContainerGap(196, Short.MAX_VALUE))
         );
 
         splitPegawai.setLeftComponent(pnlFormPegawai);
@@ -946,17 +916,9 @@ public class AdminFrame extends javax.swing.JFrame {
 
             },
             new String [] {
-                "ID Pegawai", "Nama Pegawai", "Username", "No. Telepon", "Role"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
-            };
 
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
             }
-        });
+        ));
         tblPegawai.setRowHeight(26);
         scrollPegawai.setViewportView(tblPegawai);
 
@@ -966,11 +928,11 @@ public class AdminFrame extends javax.swing.JFrame {
             pnlTabelPegawaiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlTabelPegawaiLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(pnlTabelPegawaiLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(scrollPegawai, javax.swing.GroupLayout.DEFAULT_SIZE, 732, Short.MAX_VALUE)
-                    .addGroup(pnlTabelPegawaiLayout.createSequentialGroup()
-                        .addComponent(lblDaftarPegawai)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addComponent(lblDaftarPegawai)
+                .addContainerGap(507, Short.MAX_VALUE))
+            .addGroup(pnlTabelPegawaiLayout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addComponent(scrollPegawai, javax.swing.GroupLayout.DEFAULT_SIZE, 724, Short.MAX_VALUE)
                 .addContainerGap())
         );
         pnlTabelPegawaiLayout.setVerticalGroup(
@@ -1009,7 +971,6 @@ public class AdminFrame extends javax.swing.JFrame {
 
         btnGroupKomoditas.add(rbSawit);
         rbSawit.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
-        rbSawit.setSelected(true);
         rbSawit.setText("Kelapa Sawit");
         rbSawit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1032,7 +993,7 @@ public class AdminFrame extends javax.swing.JFrame {
         cmbBlokLahan.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
 
         lblInput1.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        lblInput1.setText("Jumlah Berat Total Tandan (Kg):");
+        lblInput1.setText("Jumlah Tandan (Janjang):");
 
         txtInput1.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
 
@@ -1046,15 +1007,15 @@ public class AdminFrame extends javax.swing.JFrame {
 
         txtTidakLayak.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
 
-        lblTahunTanamPanen.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        lblTahunTanamPanen.setText("Tahun Tanam Produk:");
-
-        txtTahunTanamPanen.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
-
         lblTanggal.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         lblTanggal.setText("Tanggal Panen (YYYY-MM-DD):");
 
         txtTanggalPanen.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
+        txtTanggalPanen.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtTanggalPanenActionPerformed(evt);
+            }
+        });
 
         btnSimpan.setBackground(new java.awt.Color(21, 94, 239));
         btnSimpan.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -1096,6 +1057,16 @@ public class AdminFrame extends javax.swing.JFrame {
             }
         });
 
+        txtTahunTanamPanen.setFont(new java.awt.Font("Segoe UI", 0, 13)); // NOI18N
+        txtTahunTanamPanen.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtTahunTanamPanenActionPerformed(evt);
+            }
+        });
+
+        lblTahunTanamPanen.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lblTahunTanamPanen.setText("Tahun Tanam Produk :");
+
         javax.swing.GroupLayout pnlFormPanenLayout = new javax.swing.GroupLayout(pnlFormPanen);
         pnlFormPanen.setLayout(pnlFormPanenLayout);
         pnlFormPanenLayout.setHorizontalGroup(
@@ -1107,6 +1078,14 @@ public class AdminFrame extends javax.swing.JFrame {
                     .addComponent(txtInput1)
                     .addComponent(txtInput2)
                     .addComponent(txtTidakLayak)
+                    .addGroup(pnlFormPanenLayout.createSequentialGroup()
+                        .addComponent(btnSimpan, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnPerbarui, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnHapus, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnReset, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(txtTahunTanamPanen)
                     .addComponent(txtTanggalPanen)
                     .addGroup(pnlFormPanenLayout.createSequentialGroup()
@@ -1122,15 +1101,7 @@ public class AdminFrame extends javax.swing.JFrame {
                             .addComponent(lblTidakLayak)
                             .addComponent(lblTahunTanamPanen)
                             .addComponent(lblTanggal))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(pnlFormPanenLayout.createSequentialGroup()
-                        .addComponent(btnSimpan, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnPerbarui, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnHapus, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnReset, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         pnlFormPanenLayout.setVerticalGroup(
@@ -1158,21 +1129,21 @@ public class AdminFrame extends javax.swing.JFrame {
                 .addComponent(lblTidakLayak)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtTidakLayak, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addComponent(lblTahunTanamPanen)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtTahunTanamPanen, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addComponent(lblTanggal)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtTanggalPanen, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(24, 24, 24)
+                .addGap(18, 18, 18)
                 .addGroup(pnlFormPanenLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSimpan, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnPerbarui, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnHapus, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnReset, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(87, Short.MAX_VALUE))
+                .addContainerGap(98, Short.MAX_VALUE))
         );
 
         splitPanen.setLeftComponent(pnlFormPanen);
@@ -1189,11 +1160,11 @@ public class AdminFrame extends javax.swing.JFrame {
 
             },
             new String [] {
-                "ID Panen", "Tanggal", "Blok Lahan", "Komoditas", "Tahun Tanam", "Total Panen (Kg)", "Kualitas"
+                "ID Panen", "Tanggal", "Blok Lahan", "Komoditas", "Total Panen (Kg)", "Kualitas"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false
+                false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -1455,7 +1426,7 @@ public class AdminFrame extends javax.swing.JFrame {
         btnHitungMetrik.setBackground(new java.awt.Color(21, 94, 239));
         btnHitungMetrik.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnHitungMetrik.setForeground(new java.awt.Color(255, 255, 255));
-        btnHitungMetrik.setText("Hitung Metrik");
+        btnHitungMetrik.setText("Kalkulasi Metrik Otomatis");
         btnHitungMetrik.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnHitungMetrik.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1543,9 +1514,8 @@ public class AdminFrame extends javax.swing.JFrame {
         lblCatatanPegawaiView.setText("Catatan Petugas:");
 
         txtCatatanPegawaiView.setEditable(false);
-        txtCatatanPegawaiView.setBackground(new java.awt.Color(241, 245, 249));
+        txtCatatanPegawaiView.setBackground(new java.awt.Color(248, 248, 248));
         txtCatatanPegawaiView.setColumns(20);
-        txtCatatanPegawaiView.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         txtCatatanPegawaiView.setLineWrap(true);
         txtCatatanPegawaiView.setRows(2);
         txtCatatanPegawaiView.setWrapStyleWord(true);
@@ -1669,7 +1639,7 @@ public class AdminFrame extends javax.swing.JFrame {
                     .addComponent(btnPerbaruiEval, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnHapusEval, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnResetEval, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(40, Short.MAX_VALUE))
+                .addContainerGap(50, Short.MAX_VALUE))
         );
 
         splitEval.setLeftComponent(pnlFormEval);
@@ -1929,7 +1899,6 @@ public class AdminFrame extends javax.swing.JFrame {
         String pass = new String(txtPasswordPgw.getPassword());
         String telp = txtNoTelp.getText().trim();
         String role = cmbRole.getSelectedItem().toString();
-        String detailRole = txtDetailRole.getText().trim();
 
         if (nama.isEmpty()) {
             JOptionPane.showMessageDialog(this, "<html><div style='width: 300px;'><b>Validasi Gagal:</b> Nama lengkap pegawai tidak boleh kosong!</div></html>", "Peringatan", JOptionPane.WARNING_MESSAGE);
@@ -1951,11 +1920,6 @@ public class AdminFrame extends javax.swing.JFrame {
             txtNoTelp.requestFocus();
             return;
         }
-        if (detailRole.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "<html><div style='width: 300px;'><b>Validasi Gagal:</b> Field " + lblDetailRole.getText().replace(":", "") + " tidak boleh kosong!</div></html>", "Peringatan", JOptionPane.WARNING_MESSAGE);
-            txtDetailRole.requestFocus();
-            return;
-        }
 
         for (Pegawai existing : DataStore.getInstance().getPegawaiList()) {
             if (existing.getUsername().equalsIgnoreCase(user)) {
@@ -1966,7 +1930,7 @@ public class AdminFrame extends javax.swing.JFrame {
         }
 
         String newId = DataStore.getInstance().generatePegawaiId();
-        DataStore.getInstance().addPegawai(new Pegawai(newId, nama, user, pass, telp, role, detailRole));
+        DataStore.getInstance().addPegawai(new Pegawai(newId, nama, user, pass, telp, role));
         JOptionPane.showMessageDialog(this, "Pegawai berhasil ditambahkan dengan ID: " + newId);
         refreshPegawaiTable();
         resetPegawaiForm();
@@ -1982,7 +1946,6 @@ public class AdminFrame extends javax.swing.JFrame {
         String pass = new String(txtPasswordPgw.getPassword());
         String telp = txtNoTelp.getText().trim();
         String role = cmbRole.getSelectedItem() == null ? "Petugas" : cmbRole.getSelectedItem().toString();
-        String detailRole = txtDetailRole.getText().trim();
 
         if (nama.isEmpty()) {
             JOptionPane.showMessageDialog(this, "<html><div style='width: 300px;'><b>Validasi Gagal:</b> Nama lengkap pegawai tidak boleh kosong!</div></html>", "Peringatan", JOptionPane.WARNING_MESSAGE);
@@ -1999,11 +1962,6 @@ public class AdminFrame extends javax.swing.JFrame {
             txtNoTelp.requestFocus();
             return;
         }
-        if (detailRole.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "<html><div style='width: 300px;'><b>Validasi Gagal:</b> Field " + lblDetailRole.getText().replace(":", "") + " tidak boleh kosong!</div></html>", "Peringatan", JOptionPane.WARNING_MESSAGE);
-            txtDetailRole.requestFocus();
-            return;
-        }
 
         for (Pegawai existing : DataStore.getInstance().getPegawaiList()) {
             if (!existing.getIdPegawai().equalsIgnoreCase(selectedPegawaiId) && existing.getUsername().equalsIgnoreCase(user)) {
@@ -2014,6 +1972,7 @@ public class AdminFrame extends javax.swing.JFrame {
         Pegawai selected = DataStore.getInstance().findPegawaiById(selectedPegawaiId);
         if (selected == null) return;
         if (pass.isEmpty()) pass = selected.getPassword();
+        String detailRole = selected.getRole().equalsIgnoreCase(role) ? selected.getDetailRole() : "";
         DataStore.getInstance().updatePegawai(new Pegawai(selectedPegawaiId, nama, user, pass, telp, role, detailRole));
         JOptionPane.showMessageDialog(this, "Data pegawai berhasil diperbarui!");
         refreshPegawaiTable();
@@ -2099,13 +2058,6 @@ public class AdminFrame extends javax.swing.JFrame {
             txtUsernamePgw.setText(tblPegawai.getValueAt(row, 2).toString());
             txtNoTelp.setText(tblPegawai.getValueAt(row, 3).toString());
             cmbRole.setSelectedItem(tblPegawai.getValueAt(row, 4).toString());
-            updateRoleDetailLabel();
-            for (Pegawai p : DataStore.getInstance().getPegawaiList()) {
-                if (p.getIdPegawai().equalsIgnoreCase(selectedPegawaiId)) {
-                    txtDetailRole.setText(p.getDetailRole() != null ? p.getDetailRole() : "");
-                    break;
-                }
-            }
         }
     }//GEN-LAST:event_tblPegawaiMouseClicked
 
@@ -2488,6 +2440,14 @@ public class AdminFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_cmbStatusEvalActionPerformed
 
+    private void txtTanggalPanenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTanggalPanenActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtTanggalPanenActionPerformed
+
+    private void txtTahunTanamPanenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTahunTanamPanenActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtTahunTanamPanenActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup btnGroupKomoditas;
     private javax.swing.JButton btnHapus;
@@ -2528,7 +2488,6 @@ public class AdminFrame extends javax.swing.JFrame {
     private javax.swing.JLabel lblDaftarPanen;
     private javax.swing.JLabel lblDaftarPegawai;
     private javax.swing.JLabel lblDaftarRekap;
-    private javax.swing.JLabel lblDetailRole;
     private javax.swing.JLabel lblEvalAkhir;
     private javax.swing.JLabel lblEvalAwal;
     private javax.swing.JLabel lblEvalPeriode;
@@ -2600,7 +2559,6 @@ public class AdminFrame extends javax.swing.JFrame {
     private javax.swing.JTextArea txtCatatanEvaluasi;
     private javax.swing.JTextArea txtCatatanPegawaiView;
     private javax.swing.JTextArea txtCatatanTindakLanjut;
-    private javax.swing.JTextField txtDetailRole;
     private javax.swing.JTextField txtEvalAkhir;
     private javax.swing.JTextField txtEvalAwal;
     private javax.swing.JTextField txtInput1;
