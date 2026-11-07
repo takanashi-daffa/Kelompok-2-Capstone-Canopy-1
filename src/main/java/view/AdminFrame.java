@@ -315,7 +315,9 @@ public class AdminFrame extends javax.swing.JFrame {
         double first = Double.parseDouble(input1);
         double second = Double.parseDouble(input2);
         double reject = Double.parseDouble(rejectText);
-        double total = "Sawit".equalsIgnoreCase(commodity) ? Panen.hitungTotalSawit(first, second) : first;
+        double total = "Sawit".equalsIgnoreCase(commodity)
+                    ? Panen.hitungTotalSawit(first, second)
+                    : Panen.hitungKaretBersih(first, second);
         if (total <= 0 || reject > total) {
             JOptionPane.showMessageDialog(this, "<html><div style='width: 320px;'>Total panen harus lebih dari nol dan hasil tidak layak tidak boleh melebihi total panen (karena hasil tidak layak merupakan bagian dari total panen kotor).</div></html>", "Input Tidak Valid", JOptionPane.WARNING_MESSAGE);
             return null;
